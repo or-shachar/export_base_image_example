@@ -23,3 +23,17 @@ This target can be very useful for external publishing tooling that needs to kno
 
 This repo needs some changes in rules_docker so that `container_pull` targets would add some tags to the generated `container_import` target.
 
+In order to test it just clone and run:
+```bash
+$ bazel build //:app_layers_metadata 
+```
+to get:
+```txt
+INFO: Analyzed target //:app_layers_metadata (4 packages loaded, 67 targets configured).
+INFO: Found 1 target...
+Target //:app_layers_metadata up-to-date:
+  bazel-bin/app_layers_metadata.json
+INFO: Elapsed time: 25.992s, Critical Path: 0.00s
+INFO: 0 processes.
+INFO: Build completed successfully, 2 total actions
+```
