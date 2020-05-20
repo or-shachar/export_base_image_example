@@ -1,0 +1,24 @@
+load("@io_bazel_rules_docker//container:container.bzl", "container_image")
+load("//:layers_metadata_export.bzl","layers_metadata_export")
+container_image(
+    name = "layer0",
+    # References container_pull from WORKSPACE (above)
+    base = "@java_base//image",
+    files = ["//:file.txt"],
+)
+
+container_image(
+    name = "layer1",
+    base = "layer0",
+)
+
+container_image(
+    name = "app",
+    base = "layer1",
+    files = ["//:file2.txt"],
+)
+
+layers_metadata_export(
+    name = "app_layers_metadata",
+    image = "app"
+)
