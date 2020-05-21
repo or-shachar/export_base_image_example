@@ -1,4 +1,4 @@
-load("@io_bazel_rules_docker//container:pull.bzl","pull_tags_prefix")
+load("@io_bazel_rules_docker//container:providers.bzl", "ImportInfo")
 
 LayersMetadata = provider(
     fields = {
@@ -23,18 +23,15 @@ def _layers_metadata_aspect_impl(target, ctx):
         base_image_repository = base[LayersMetadata].base_image_repository
         base_image_digest =  base[LayersMetadata].base_image_digest
     else:
-        base_image_registry = None
-        base_image_repository = None
-        base_image_digest = None
-        tags = getattr(ctx.rule.attr, "tags", [])
-        for tag in tags:
-            if tag.startswith(pull_tags_prefix.registry):
-                base_image_registry = tag[len(pull_tags_prefix.registry):]
-            elif tag.startswith(pull_tags_prefix.repository):
-                base_image_repository = tag[len(pull_tags_prefix.repository):]
-            elif tag.startswith(pull_tags_prefix.digest):
-                base_image_digest = tag[len(pull_tags_prefix.digest):]
-        base_image_target = ctx.build_file_path
+        if ImportInfo in target:
+            import_info = target[ImportInfo]
+            base_image_registry = import_info.source_registry
+            base_image_repository = import_info.source_repository
+            base_image_digest = import_info.source_digest
+        else:
+            base_image_registry = None
+            base_image_repository = None
+            base_image_digest = None
 
     return [LayersMetadata(
         base_layers_labels = accumulated_base_files,

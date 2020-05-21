@@ -1,13 +1,15 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 # custom version
-rules_docker_version = "81ab32bd21add6b755ef3987ce69fa2e539d4aea"
+rules_docker_version = "5d18f3425df3571aca700b1511eaa408b38eed2b"
 
 http_archive(
   name = "io_bazel_rules_docker",
   strip_prefix= "rules_docker-%s" % rules_docker_version,
   urls = ["https://github.com/or-shachar/rules_docker/archive/%s.tar.gz" % rules_docker_version],
 )
+
+
 
 load(
     "@io_bazel_rules_docker//repositories:repositories.bzl",

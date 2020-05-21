@@ -9,5 +9,5 @@ def external_images():
         registry = "gcr.io",
         repository = "distroless/java",
         # 'tag' is also supported, but digest is encouraged for reproducibility.
-        tag = "11",
+        tag = "8",
     )
