@@ -1,7 +1,7 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 # custom version
-rules_docker_version = "5d18f3425df3571aca700b1511eaa408b38eed2b"
+rules_docker_version = "c2bcc086548c49c22ec10002a2f50e6e53d2e86a"
 
 http_archive(
   name = "io_bazel_rules_docker",

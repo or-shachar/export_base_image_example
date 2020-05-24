@@ -1,4 +1,4 @@
-load("@io_bazel_rules_docker//container:providers.bzl", "ImportInfo")
+load("@io_bazel_rules_docker//container:providers.bzl", "PullInfo")
 
 LayersMetadata = provider(
     fields = {
@@ -23,11 +23,11 @@ def _layers_metadata_aspect_impl(target, ctx):
         base_image_repository = base[LayersMetadata].base_image_repository
         base_image_digest =  base[LayersMetadata].base_image_digest
     else:
-        if ImportInfo in target:
-            import_info = target[ImportInfo]
-            base_image_registry = import_info.source_registry
-            base_image_repository = import_info.source_repository
-            base_image_digest = import_info.source_digest
+        if PullInfo in target:
+            pull_info = target[PullInfo]
+            base_image_registry = pull_info.base_image_registry
+            base_image_repository = pull_info.base_image_repository
+            base_image_digest = pull_info.base_image_digest
         else:
             base_image_registry = None
             base_image_repository = None
